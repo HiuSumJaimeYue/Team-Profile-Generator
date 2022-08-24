@@ -9,7 +9,7 @@ const createEmployee = (portfolioData = []) => {
     Add another Employee
     ====================
     `);
-    // If there's no 'projects' array property, create one
+    // If there's no 'members' array property, create one
     if (!portfolioData.members) {
         portfolioData.members = [];
     }
@@ -48,7 +48,7 @@ const createEmployee = (portfolioData = []) => {
         {
             type: 'input',
             name: 'email',
-            message: 'What is the email of the employee? (Required)',
+            message: 'What is the email of the employee?',
             validate: emailInput => {
                 if (emailInput) {
                     return true;
@@ -60,11 +60,12 @@ const createEmployee = (portfolioData = []) => {
         }])
         .then(employeeData => {
             positionQuestion(employeeData, portfolioData);
+            return portfolioData;
             // this.createHTML();
         });
 }
 
-const positionQuestion = (employeeData, data) =>{
+const positionQuestion = (employeeData, data) => {
     if (employeeData.role === 'Engineer') {
         //create here
         inquirer
@@ -83,7 +84,12 @@ const positionQuestion = (employeeData, data) =>{
             })
             .then(({ githubUsername }) => {
                 employeeData.github = githubUsername;
-                data.members.push(employeeData);
+                let engineer = new Engineer(employeeData.name,
+                    employeeData.id,employeeData.email,employeeData.github);
+
+                console.log(engineer);
+
+                data.members.push(engineer);
                 checkAddEmployee(data);
             });
     } else if (employeeData.role === 'Intern') {
@@ -104,13 +110,15 @@ const positionQuestion = (employeeData, data) =>{
             })
             .then(({ school }) => {
                 employeeData.school = school;
-                data.members.push(employeeData);
+                let intern = new Intern(employeeData.name,
+                    employeeData.id,employeeData.email,employeeData.school);
+
+                console.log(intern);
+                data.members.push(intern);
                 checkAddEmployee(data);
             });
     }
 }
-
-
 
 const checkAddEmployee = (data) => {
     inquirer
@@ -120,10 +128,7 @@ const checkAddEmployee = (data) => {
             message: 'Would you like to add another employee?',
             default: false
         }).then(({ confirmAddEmployee }) => {
-            // employeeData.confirmAddEmployee = confirmAddEmployee;
-
             if (confirmAddEmployee) {
-                // confirmAddEmployee = false;
                 return createEmployee(data);
             } else {
                 console.log(data);
@@ -168,7 +173,7 @@ const createTeam = (teamData = []) => {
         {
             type: 'input',
             name: 'email',
-            message: 'What is the email of the the team manager? (Required)',
+            message: 'What is the email of the the team manager?',
             validate: emailInput => {
                 if (emailInput) {
                     return true;
@@ -180,7 +185,7 @@ const createTeam = (teamData = []) => {
         }, {
             type: 'input',
             name: 'officeNum',
-            message: 'What is the office number of the the team manager? (Required)',
+            message: 'What is the office number of the the team manager?',
             validate: officeNumInput => {
                 if (officeNumInput) {
                     return true;
@@ -191,7 +196,12 @@ const createTeam = (teamData = []) => {
             }
         }])
         .then(managerData => {
-            teamData.manager = managerData;
+            let manager = new Manager(managerData.name,
+                managerData.id,managerData.email,managerData.officeNum);
+
+            teamData.manager = manager;
+            console.log(manager);
+            
             // this.employee = new Manager(name, email);
             console.log(teamData);
             // console.log(this.employee);
