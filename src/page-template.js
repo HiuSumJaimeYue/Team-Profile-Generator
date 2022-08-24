@@ -1,3 +1,35 @@
+const generateCards = membersArr => {
+    return `
+        ${membersArr
+            .map(({ name, id, email}) => {
+                return `
+                <div class="mb-3  col-12 col-md-6 col-lg-4">
+                <div class="card">
+                    <h3 class="card-header">
+                        ${name}
+                    </h3>
+                    <h3 class="card-header">
+                        ${name}
+                    </h3>
+                    <div class="card-body">
+                        <p class="card-text">ID: ${id}</p>
+                        <p class="card-text">Github: <a href="https://github.com/s" target="_blank"
+                                rel="noopener noreferrer">
+                                GitHub</a>
+                        </p>
+                        <p class="card-text">Email: <a href="mailto:${email}">${email}
+                        </a></p>
+                    </div>
+                </div>
+            </div>
+          `;
+            })
+            .join('')}
+        </div>
+      </section>
+    `;
+};
+
 function generatePage(templateData){
     return `
 <!DOCTYPE html>

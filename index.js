@@ -5,7 +5,7 @@ const Intern = require('./lib/Intern');
 const generatePage = require('./src/page-template');
 const { writeFile, copyFile } = require('./utils/generate-site');
 
-const createEmployee = teamData => {
+const createEmployee = (teamData = []) => {
     console.log(teamData);
     console.log(`
     ====================
@@ -168,16 +168,16 @@ const createTeam = (teamData = []) => {
             console.log(manager);
             teamData.manager = manager;
             console.log(teamData);
-            // createEmployee(teamData);
+            createEmployee(teamData);
 
         });
 }
 
-createTeam().then(createEmployee);
-    // .then(teamData => {
-    //     console.log(teamData);
-    //     return generatePage(teamData);
-    // })
+createTeam()
+    .then(teamData => {
+        console.log(teamData);
+        return generatePage(teamData);
+    })
     // .then(pageHTML => {
     //     return writeFile(pageHTML);
     // })
