@@ -32,7 +32,7 @@ const createEmployee = (portfolioData = []) => {
                     return false;
                 }
             }
-        },{
+        }, {
             type: 'input',
             name: 'id',
             message: 'What is the id of the employee?',
@@ -57,25 +57,78 @@ const createEmployee = (portfolioData = []) => {
                     return false;
                 }
             }
-        }, {
+        }])
+        .then(employeeData => {
+            positionQuestion(employeeData, portfolioData);
+            // this.createHTML();
+        });
+}
+
+const positionQuestion = (employeeData, data) =>{
+    if (employeeData.role === 'Engineer') {
+        //create here
+        inquirer
+            .prompt({
+                type: 'input',
+                name: 'githubUsername',
+                message: 'What is the Github username of the Engineer?',
+                validate: githubUsernameInput => {
+                    if (githubUsernameInput) {
+                        return true;
+                    } else {
+                        console.log('Please enter a Github username!');
+                        return false;
+                    }
+                }
+            })
+            .then(({ githubUsername }) => {
+                employeeData.github = githubUsername;
+                data.members.push(employeeData);
+                checkAddEmployee(data);
+            });
+    } else if (employeeData.role === 'Intern') {
+        //create here
+        inquirer
+            .prompt({
+                type: 'input',
+                name: 'school',
+                message: 'What school is the Intern in?',
+                validate: schoolInput => {
+                    if (schoolInput) {
+                        return true;
+                    } else {
+                        console.log('Please enter a school name!');
+                        return false;
+                    }
+                }
+            })
+            .then(({ school }) => {
+                employeeData.school = school;
+                data.members.push(employeeData);
+                checkAddEmployee(data);
+            });
+    }
+}
+
+
+
+const checkAddEmployee = (data) => {
+    inquirer
+        .prompt({
             type: 'confirm',
             name: 'confirmAddEmployee',
             message: 'Would you like to add another employee?',
             default: false
-        }])
-        .then(employeeData => {
-            portfolioData.members.push(employeeData);
-            // this.employee = new Manager(name, email);
+        }).then(({ confirmAddEmployee }) => {
+            // employeeData.confirmAddEmployee = confirmAddEmployee;
 
-            // console.log(this.employee);
-            if (employeeData.confirmAddEmployee) {
-                return createEmployee(portfolioData);
+            if (confirmAddEmployee) {
+                // confirmAddEmployee = false;
+                return createEmployee(data);
             } else {
-                console.log(portfolioData);
-                return portfolioData;
+                console.log(data);
+                return data;
             }
-            // this.createHTML();
-
         });
 }
 
@@ -99,7 +152,7 @@ const createTeam = (teamData = []) => {
                     return false;
                 }
             }
-        },{
+        }, {
             type: 'input',
             name: 'id',
             message: 'What is the id of the team manager?',
