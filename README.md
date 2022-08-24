@@ -16,5 +16,4 @@ Sample index.html created by Team Profile Generator: https://github.com/HiuSumJa
 Video of demonstration: https://drive.google.com/file/d/1cqsUk7vhP_XimHxlCRoW2dOqi3ORnnUS/view                  
 
 Screenshots of the application is included below.                  
-![Team Profile Generator Preview1](web "TeamProfile-Preview1")  
-![Team Profile Generator Preview2](web "TeamProfile-Preview2")  
+![Team Profile Generator Preview1](https://github.com/HiuSumJaimeYue/Team-Profile-Generator/blob/main/screenshots/TeamProfileGeneratorPreview1.jpg "TeamProfile-Preview1")  
