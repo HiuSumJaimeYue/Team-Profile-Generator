@@ -1,20 +1,4 @@
-// const Manager = require('../lib/Manager');
-// const Engineer = require('../lib/Engineer');
-// const Intern = require('../lib/Intern');
-
-const generateExtraInfo = employee => {
-    if(employee.role === 'Engineer'){
-        return `
-                        // <p class="card-text">Github: <a href="https://github.com/${member.getGithub()}" target="_blank"
-                        // rel="noopener noreferrer">
-                        // ${member.getGithub()}</a>
-
-                        `;
-    }
-    else if (employee.role === 'Intern'){
-
-    }
-}
+//Generate code for team member cards 
 const generateCards = membersArr => {
     return `
         ${membersArr
@@ -22,7 +6,7 @@ const generateCards = membersArr => {
             .map(member => {
                 return `
                 <div class="mb-3 col-12 col-md-6 col-lg-4">
-                <div class="card border-0">
+                <div class="shadow card border-0">
                     <h3 class="card-header">
                         ${member.getName()}
                     </h3>
@@ -51,7 +35,7 @@ const generateCards = membersArr => {
                 .map(member => {
                     return `
                     <div class="mb-3 col-12 col-md-6 col-lg-4">
-                    <div class="card border-0">
+                    <div class="shadow card border-0">
                         <h3 class="card-header">
                             ${member.getName()}
                         </h3>
@@ -64,7 +48,7 @@ const generateCards = membersArr => {
                             <p class="card-text">Email: <a href="mailto:${member.getEmail()}">${member.getEmail()}
                             </a></p>
     
-                            <p class="card-text">ID: ${member.getSchool()}</p>
+                            <p class="card-text">School: ${member.getSchool()}</p>
                     </p>
                         </div>
                     </div>
@@ -76,6 +60,7 @@ const generateCards = membersArr => {
     `;
 };
 
+//Generate code using data from index.js
 function generatePage(templateData){
     return `
 <!DOCTYPE html>
@@ -99,7 +84,7 @@ function generatePage(templateData){
     <main class="container">
         <section class="row justify-content-around">
             <div class="mb-3 col-12 col-md-6 col-lg-4">
-                <div class="card border-0">
+                <div class="shadow card border-0">
                     <h3 class="card-header">
                         ${templateData.manager.getName()}
                     </h3>

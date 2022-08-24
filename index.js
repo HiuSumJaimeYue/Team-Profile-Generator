@@ -109,7 +109,6 @@ const createEmployee = (teamData = []) => {
                 return createEmployee(teamData);
             } else {
                 console.log(teamData);
-                // console.log(generatePage(teamData));
                 writeFile(generatePage(teamData));
                 copyFile();
                 return teamData;
@@ -180,7 +179,6 @@ const createTeam = (teamData = []) => {
                 managerData.id, managerData.email, managerData.officeNum);
             
             teamData.manager = manager;
-            console.log(teamData);
             createEmployee(teamData);
 
         });
