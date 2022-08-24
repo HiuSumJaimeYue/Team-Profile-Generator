@@ -1,6 +1,7 @@
 :root {
-    --primary: #2563ff;
+    --primary: #3669ea;
     --secondary: #f94646;
+    --tertiary: #d2dfff;
     --border-radius: .3rem;
 }
 
@@ -22,8 +23,11 @@ body {
     border-radius: var(--border-radius);
 }
 
-.card-multiple {
-    background-color: var(--secondary);
+.card-header {
+    background-color: var(--primary);
     color: white;
-    padding: 1%;
+}
+
+.card-body {
+    background-color: var(--tertiary);
 }
