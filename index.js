@@ -2,6 +2,8 @@ const inquirer = require('inquirer');
 const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
+const generatePage = require('./src/page-template');
+const { writeFile, copyFile } = require('./utils/generate-site');
 
 const createEmployee = (teamData = []) => {
     console.log(`
@@ -85,8 +87,6 @@ const positionQuestion = (employeeData, data) => {
                 let engineer = new Engineer(employeeData.name,
                     employeeData.id, employeeData.email, employeeData.github);
 
-                console.log(engineer);
-
                 data.members.push(engineer);
                 checkAddEmployee(data);
             });
@@ -110,7 +110,6 @@ const positionQuestion = (employeeData, data) => {
                 let intern = new Intern(employeeData.name,
                     employeeData.id, employeeData.email, employeeData.school);
 
-                console.log(intern);
                 data.members.push(intern);
                 checkAddEmployee(data);
             });
@@ -197,7 +196,6 @@ const createTeam = (teamData = []) => {
                 managerData.id, managerData.email, managerData.officeNum);
 
             teamData.manager = manager;
-            console.log(manager);
             createEmployee(teamData);
 
         });
@@ -208,19 +206,19 @@ createTeam()
         console.log(teamData);
         return generatePage(teamData);
     })
-    .then(pageHTML => {
-        return writeFile(pageHTML);
-    })
-    .then(writeFileResponse => {
-        console.log(writeFileResponse);
-        return copyFile();
-    })
-    .then(copyFileResponse => {
-        console.log(copyFileResponse);
-    })
-    .catch(err => {
-        console.log(err);
-    });
+    // .then(pageHTML => {
+    //     return writeFile(pageHTML);
+    // })
+    // .then(writeFileResponse => {
+    //     console.log(writeFileResponse);
+    //     return copyFile();
+    // })
+    // .then(copyFileResponse => {
+    //     console.log(copyFileResponse);
+    // })
+    // .catch(err => {
+    //     console.log(err);
+    // });
 
 
 
