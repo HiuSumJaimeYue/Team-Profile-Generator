@@ -3,15 +3,15 @@ const Manager = require('./lib/Manager');
 const Engineer = require('./lib/Engineer');
 const Intern = require('./lib/Intern');
 
-const createEmployee = (portfolioData = []) => {
+const createEmployee = (teamData = []) => {
     console.log(`
     ====================
     Add another Employee
     ====================
     `);
     // If there's no 'members' array property, create one
-    if (!portfolioData.members) {
-        portfolioData.members = [];
+    if (!teamData.members) {
+        teamData.members = [];
     }
 
     inquirer
@@ -59,15 +59,13 @@ const createEmployee = (portfolioData = []) => {
             }
         }])
         .then(employeeData => {
-            positionQuestion(employeeData, portfolioData);
-            return portfolioData;
-            // this.createHTML();
+            positionQuestion(employeeData, teamData);
+            return teamData;
         });
 }
 
 const positionQuestion = (employeeData, data) => {
     if (employeeData.role === 'Engineer') {
-        //create here
         inquirer
             .prompt({
                 type: 'input',
@@ -85,7 +83,7 @@ const positionQuestion = (employeeData, data) => {
             .then(({ githubUsername }) => {
                 employeeData.github = githubUsername;
                 let engineer = new Engineer(employeeData.name,
-                    employeeData.id,employeeData.email,employeeData.github);
+                    employeeData.id, employeeData.email, employeeData.github);
 
                 console.log(engineer);
 
@@ -93,7 +91,6 @@ const positionQuestion = (employeeData, data) => {
                 checkAddEmployee(data);
             });
     } else if (employeeData.role === 'Intern') {
-        //create here
         inquirer
             .prompt({
                 type: 'input',
@@ -111,7 +108,7 @@ const positionQuestion = (employeeData, data) => {
             .then(({ school }) => {
                 employeeData.school = school;
                 let intern = new Intern(employeeData.name,
-                    employeeData.id,employeeData.email,employeeData.school);
+                    employeeData.id, employeeData.email, employeeData.school);
 
                 console.log(intern);
                 data.members.push(intern);
@@ -197,21 +194,34 @@ const createTeam = (teamData = []) => {
         }])
         .then(managerData => {
             let manager = new Manager(managerData.name,
-                managerData.id,managerData.email,managerData.officeNum);
+                managerData.id, managerData.email, managerData.officeNum);
 
             teamData.manager = manager;
             console.log(manager);
-            
-            // this.employee = new Manager(name, email);
-            console.log(teamData);
-            // console.log(this.employee);
             createEmployee(teamData);
-            // this.createHTML();
 
         });
 }
 
-createTeam();
+createTeam()
+    .then(teamData => {
+        console.log(teamData);
+        return generatePage(teamData);
+    })
+    .then(pageHTML => {
+        return writeFile(pageHTML);
+    })
+    .then(writeFileResponse => {
+        console.log(writeFileResponse);
+        return copyFile();
+    })
+    .then(copyFileResponse => {
+        console.log(copyFileResponse);
+    })
+    .catch(err => {
+        console.log(err);
+    });
+
 
 
 
