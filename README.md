@@ -12,8 +12,8 @@ With the Github section, you can click into the Github link that open in a new t
       
        
 Github repository: https://github.com/HiuSumJaimeYue/Team-Profile-Generator           
-Sample index.html created by Team Profile Generator:       
-Video of demonstration:                  
+Sample index.html created by Team Profile Generator: https://github.com/HiuSumJaimeYue/Team-Profile-Generator/blob/main/dist/index.html      
+Video of demonstration: https://drive.google.com/file/d/1cqsUk7vhP_XimHxlCRoW2dOqi3ORnnUS/view                  
 
 Screenshots of the application is included below.                  
 ![Team Profile Generator Preview1](web "TeamProfile-Preview1")  
