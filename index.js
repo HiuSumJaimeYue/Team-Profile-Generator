@@ -5,7 +5,8 @@ const Intern = require('./lib/Intern');
 const generatePage = require('./src/page-template');
 const { writeFile, copyFile } = require('./utils/generate-site');
 
-const createEmployee = (teamData = []) => {
+const createEmployee = teamData => {
+    console.log(teamData);
     console.log(`
     ====================
     Add another Employee
@@ -16,7 +17,7 @@ const createEmployee = (teamData = []) => {
         teamData.members = [];
     }
 
-    inquirer
+    return inquirer
         .prompt([{
             type: 'list',
             message: 'Add what role to the team?',
@@ -59,76 +60,45 @@ const createEmployee = (teamData = []) => {
                     return false;
                 }
             }
-        }])
-        .then(employeeData => {
-            positionQuestion(employeeData, teamData);
-            return teamData;
-        });
-}
-
-const positionQuestion = (employeeData, data) => {
-    if (employeeData.role === 'Engineer') {
-        inquirer
-            .prompt({
-                type: 'input',
-                name: 'githubUsername',
-                message: 'What is the Github username of the Engineer?',
-                validate: githubUsernameInput => {
-                    if (githubUsernameInput) {
-                        return true;
-                    } else {
-                        console.log('Please enter a Github username!');
-                        return false;
-                    }
+        }, {
+            type: 'input',
+            name: 'githubUsername',
+            message: 'What is the Github username of the Engineer?',
+            validate: githubUsernameInput => {
+                if (githubUsernameInput) {
+                    return true;
+                } else {
+                    console.log('Please enter a Github username!');
+                    return false;
                 }
-            })
-            .then(({ githubUsername }) => {
-                employeeData.github = githubUsername;
-                let engineer = new Engineer(employeeData.name,
-                    employeeData.id, employeeData.email, employeeData.github);
-
-                data.members.push(engineer);
-                checkAddEmployee(data);
-            });
-    } else if (employeeData.role === 'Intern') {
-        inquirer
-            .prompt({
-                type: 'input',
-                name: 'school',
-                message: 'What school is the Intern in?',
-                validate: schoolInput => {
-                    if (schoolInput) {
-                        return true;
-                    } else {
-                        console.log('Please enter a school name!');
-                        return false;
-                    }
+            },
+            when: (answers) => answers.role === 'Engineer'
+        }, {
+            type: 'input',
+            name: 'school',
+            message: 'What school is the Intern in?',
+            validate: schoolInput => {
+                if (schoolInput) {
+                    return true;
+                } else {
+                    console.log('Please enter a school name!');
+                    return false;
                 }
-            })
-            .then(({ school }) => {
-                employeeData.school = school;
-                let intern = new Intern(employeeData.name,
-                    employeeData.id, employeeData.email, employeeData.school);
-
-                data.members.push(intern);
-                checkAddEmployee(data);
-            });
-    }
-}
-
-const checkAddEmployee = (data) => {
-    inquirer
-        .prompt({
+            },
+            when: (answers) => answers.role === 'Intern'
+        }, {
             type: 'confirm',
             name: 'confirmAddEmployee',
             message: 'Would you like to add another employee?',
             default: false
-        }).then(({ confirmAddEmployee }) => {
-            if (confirmAddEmployee) {
-                return createEmployee(data);
+        }])
+        .then(employeeData => {
+            teamData.members.push(employeeData);
+            if (employeeData.confirmAddEmployee) {
+                return createEmployee(teamData);
             } else {
-                console.log(data);
-                return data;
+                console.log(teamData);
+                return teamData;
             }
         });
 }
@@ -140,7 +110,7 @@ const createTeam = (teamData = []) => {
     ========================
     `);
 
-    inquirer
+    return inquirer
         .prompt([{
             type: 'input',
             name: 'name',
@@ -194,18 +164,20 @@ const createTeam = (teamData = []) => {
         .then(managerData => {
             let manager = new Manager(managerData.name,
                 managerData.id, managerData.email, managerData.officeNum);
-
+            
+            console.log(manager);
             teamData.manager = manager;
-            createEmployee(teamData);
+            console.log(teamData);
+            // createEmployee(teamData);
 
         });
 }
 
-createTeam()
-    .then(teamData => {
-        console.log(teamData);
-        return generatePage(teamData);
-    })
+createTeam().then(createEmployee);
+    // .then(teamData => {
+    //     console.log(teamData);
+    //     return generatePage(teamData);
+    // })
     // .then(pageHTML => {
     //     return writeFile(pageHTML);
     // })
