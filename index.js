@@ -21,7 +21,7 @@ const createEmployee = (portfolioData = []) => {
             name: 'role',
             choices: ['Engineer', 'Intern']
         }, {
-            type: 'text',
+            type: 'input',
             name: 'name',
             message: 'What is the name of the employee?',
             validate: nameInput => {
@@ -29,6 +29,18 @@ const createEmployee = (portfolioData = []) => {
                     return true;
                 } else {
                     console.log('Please enter a name!');
+                    return false;
+                }
+            }
+        },{
+            type: 'input',
+            name: 'id',
+            message: 'What is the id of the employee?',
+            validate: idInput => {
+                if (idInput) {
+                    return true;
+                } else {
+                    console.log('Please enter an employee Id!');
                     return false;
                 }
             }
@@ -52,7 +64,6 @@ const createEmployee = (portfolioData = []) => {
             default: false
         }])
         .then(employeeData => {
-            console.log(employeeData);
             portfolioData.members.push(employeeData);
             // this.employee = new Manager(name, email);
 
@@ -77,7 +88,7 @@ const createTeam = (teamData = []) => {
 
     inquirer
         .prompt([{
-            type: 'text',
+            type: 'input',
             name: 'name',
             message: 'What is the name of the team manager?',
             validate: nameInput => {
@@ -85,6 +96,18 @@ const createTeam = (teamData = []) => {
                     return true;
                 } else {
                     console.log('Please enter a name!');
+                    return false;
+                }
+            }
+        },{
+            type: 'input',
+            name: 'id',
+            message: 'What is the id of the team manager?',
+            validate: idInput => {
+                if (idInput) {
+                    return true;
+                } else {
+                    console.log('Please enter an employee Id!');
                     return false;
                 }
             }
