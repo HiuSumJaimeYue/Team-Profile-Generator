@@ -93,11 +93,24 @@ const createEmployee = (teamData = []) => {
             default: false
         }])
         .then(employeeData => {
-            teamData.members.push(employeeData);
+            if(employeeData.role === 'Engineer'){
+                let engineer = new Engineer(employeeData.name,
+                    employeeData.id, employeeData.email, employeeData.githubUsername);
+
+                teamData.members.push(engineer);
+            }
+            else if (employeeData.role === 'Intern'){
+                let intern = new Intern(employeeData.name,
+                    employeeData.id, employeeData.email, employeeData.school);
+
+                teamData.members.push(intern);
+            }
+            
             if (employeeData.confirmAddEmployee) {
                 return createEmployee(teamData);
             } else {
                 console.log(teamData);
+                console.log(generatePage(teamData));
                 return teamData;
             }
         });
@@ -173,11 +186,11 @@ const createTeam = (teamData = []) => {
         });
 }
 
-createTeam()
-    .then(teamData => {
-        console.log(teamData);
-        return generatePage(teamData);
-    })
+createTeam();
+    // .then(teamData => {
+    //     console.log(teamData);
+    //     return generatePage(teamData);
+    // })
     // .then(pageHTML => {
     //     return writeFile(pageHTML);
     // })
